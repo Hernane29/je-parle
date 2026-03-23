@@ -1,17 +1,38 @@
-# React + Vite
+# Triangle de Référence
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Application web interactive pour visualiser le triangle de référence des pronoms personnels (JE, TOI, IL/ELLE).
 
-Currently, two official plugins are available:
+Conçue pour aider à comprendre visuellement le déplacement de référence entre trois personnes dans une conversation : qui parle, de qui on parle, et à qui on parle.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Fonctionnalités
 
-## React Compiler
+- **Flux étape par étape** : Choisis qui parle → de qui → à qui
+- **Triangle interactif** : Visualisation SVG avec flèches et badges de pronoms
+- **Vue linéaire** : Représentation en ligne droite de la phrase
+- **Auto-référence** : Support du cas « je parle de moi-même »
+- **Pronoms genrés** : IL / ELLE selon la personne
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech
 
-## Expanding the ESLint configuration
+- React 18 + Vite 5
+- Tailwind CSS 3
+- Déployé automatiquement via GitHub Pages
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# je-parle
+## Développement
+
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+Le build produit un dossier `dist/` prêt pour l'hébergement statique.
+
+## Déploiement
+
+Le déploiement est automatique via GitHub Actions. Chaque `git push` sur `main` déclenche un build et un déploiement sur GitHub Pages.
