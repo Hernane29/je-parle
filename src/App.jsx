@@ -351,36 +351,27 @@ function LinearSentenceView({ speaker, listener, reference }) {
 
 /* ─── Result view (triangle + line + reset) ─── */
 
-function SelfReferenceLoop({ position, color, bgColor }) {
+function SelfRefBadge({ position, color, bgColor }) {
   const cx = position.x, cy = position.y
   const r = 52
-  const startX = cx - 14, startY = cy - r - 6
-  const endX = cx + 14, endY = cy - r - 6
-  const topY = cy - r - 100
-  const path = `M ${startX} ${startY} C ${startX - 50} ${topY - 10}, ${endX + 50} ${topY - 10}, ${endX} ${endY}`
-  const markerId = 'self-arrow'
-  const badgeY = topY + 5
+  const badgeY = cy + r + 20
   return (
     <g>
-      <defs>
-        <marker id={markerId} markerWidth={12} markerHeight={12} refX={10} refY={6}
-          orient="auto" markerUnits="userSpaceOnUse">
-          <path d="M 0 0 L 12 6 L 0 12 Z" fill={color} />
-        </marker>
-      </defs>
-      <path d={path} fill="none" stroke={color} strokeWidth={8} opacity={0.1} strokeLinecap="round" />
-      <path d={path} fill="none" stroke={color} strokeWidth={3}
-        strokeLinecap="round" markerEnd={`url(#${markerId})`} />
-      <g className="pronoun-badge">
-        <rect x={cx - 26} y={badgeY - 13} width={52} height={26} rx={13}
-          fill={bgColor} stroke={color} strokeWidth={2} />
-        <text x={cx} y={badgeY + 4}
-          textAnchor="middle" fill={color} fontSize={13} fontWeight={800} fontFamily={F}>
-          MOI
-        </text>
-      </g>
-      <text x={cx} y={badgeY + 24}
-        textAnchor="middle" fill={color} fontSize={10} fontWeight={600}
+      {/* Small circular arrow icon above the MOI badge */}
+      <circle cx={cx + r + 8} cy={cy - r + 8} r={14}
+        fill={bgColor} stroke={color} strokeWidth={2} />
+      <text x={cx + r + 8} y={cy - r + 13} textAnchor="middle"
+        fill={color} fontSize={14} fontFamily={F}>↩</text>
+
+      {/* MOI badge below avatar */}
+      <rect x={cx - 28} y={badgeY} width={56} height={28} rx={14}
+        fill={bgColor} stroke={color} strokeWidth={2} />
+      <text x={cx} y={badgeY + 18}
+        textAnchor="middle" fill={color} fontSize={14} fontWeight={800} fontFamily={F}>
+        MOI
+      </text>
+      <text x={cx} y={badgeY + 44}
+        textAnchor="middle" fill={color} fontSize={11} fontWeight={600}
         opacity={0.7} fontFamily={F}>de moi-même</text>
     </g>
   )
@@ -390,8 +381,8 @@ function ResultView({ speaker, listener, reference, onReset }) {
   const isSelfRef = speaker.id === reference.id
 
   const POS_SELF = [
-    { x: 200, y: 300 },
-    { x: 440, y: 300 },
+    { x: 200, y: 200 },
+    { x: 440, y: 200 },
   ]
 
   const sp = isSelfRef ? POS_SELF[0] : POSITIONS[0]
@@ -432,7 +423,7 @@ function ResultView({ speaker, listener, reference, onReset }) {
       {/* SVG */}
       <div style={{ position: 'relative', width: '100%', maxWidth: 520,
         flexShrink: 1, flexGrow: 1, minHeight: 0 }}>
-        <svg viewBox={isSelfRef ? '0 0 640 480' : '0 0 600 460'} width="100%" height="100%"
+        <svg viewBox={isSelfRef ? '0 0 640 400' : '0 0 600 460'} width="100%" height="100%"
           style={{ overflow: 'visible' }} preserveAspectRatio="xMidYMid meet">
 
           {!isSelfRef && (
@@ -441,31 +432,20 @@ function ResultView({ speaker, listener, reference, onReset }) {
               fill="rgba(148,163,184,0.03)" stroke="rgba(148,163,184,0.06)" strokeWidth={1} />
           )}
 
-          {/* JE badge — left side when self-ref, above when normal */}
-          {isSelfRef ? (
-            <g>
-              <rect x={sp.x - 82} y={sp.y - 10} width={40} height={20} rx={10}
-                fill={ROLE_COLORS.speaker.bg} stroke={ROLE_COLORS.speaker.color} strokeWidth={1.5} />
-              <text x={sp.x - 62} y={sp.y + 4} textAnchor="middle" fill={ROLE_COLORS.speaker.color}
-                fontSize={12} fontWeight={800} fontFamily={F}>JE</text>
-            </g>
-          ) : (
-            <g>
-              <rect x={sp.x - 20} y={sp.y - 34} width={40} height={20} rx={10}
-                fill={ROLE_COLORS.speaker.bg} stroke={ROLE_COLORS.speaker.color} strokeWidth={1.5} />
-              <text x={sp.x} y={sp.y - 20} textAnchor="middle" fill={ROLE_COLORS.speaker.color}
-                fontSize={12} fontWeight={800} fontFamily={F}>JE</text>
-            </g>
-          )}
+          {/* JE badge above speaker */}
+          <rect x={sp.x - 20} y={sp.y - 34} width={40} height={20} rx={10}
+            fill={ROLE_COLORS.speaker.bg} stroke={ROLE_COLORS.speaker.color} strokeWidth={1.5} />
+          <text x={sp.x} y={sp.y - 20} textAnchor="middle" fill={ROLE_COLORS.speaker.color}
+            fontSize={12} fontWeight={800} fontFamily={F}>JE</text>
 
           {/* Arrow: Speaker → Listener (TOI) */}
           <DirectionalArrow from={sp} to={lp}
             color={ROLE_COLORS.listener.color} pronoun={listenerPronoun}
             bgColor={ROLE_COLORS.listener.bg} sublabel="à qui je parle" />
 
-          {/* Self-ref loop OR arrow to reference */}
+          {/* Self-ref badge below OR arrow to reference */}
           {isSelfRef ? (
-            <SelfReferenceLoop position={sp}
+            <SelfRefBadge position={sp}
               color={ROLE_COLORS.reference.color} bgColor={ROLE_COLORS.reference.bg} />
           ) : (
             <>
