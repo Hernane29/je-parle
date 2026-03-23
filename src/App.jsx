@@ -354,12 +354,12 @@ function LinearSentenceView({ speaker, listener, reference }) {
 function SelfReferenceLoop({ position, color, bgColor }) {
   const cx = position.x, cy = position.y
   const r = 52
-  const startX = cx - 12, startY = cy - r - 4
-  const endX = cx + 12, endY = cy - r - 4
-  const topY = cy - r - 70
-  const path = `M ${startX} ${startY} C ${startX - 40} ${topY}, ${endX + 40} ${topY}, ${endX} ${endY}`
+  const startX = cx - 14, startY = cy - r - 6
+  const endX = cx + 14, endY = cy - r - 6
+  const topY = cy - r - 100
+  const path = `M ${startX} ${startY} C ${startX - 50} ${topY - 10}, ${endX + 50} ${topY - 10}, ${endX} ${endY}`
   const markerId = 'self-arrow'
-  const badgeY = topY + 10
+  const badgeY = topY + 5
   return (
     <g>
       <defs>
@@ -390,8 +390,8 @@ function ResultView({ speaker, listener, reference, onReset }) {
   const isSelfRef = speaker.id === reference.id
 
   const POS_SELF = [
-    { x: 200, y: 240 },
-    { x: 440, y: 240 },
+    { x: 200, y: 300 },
+    { x: 440, y: 300 },
   ]
 
   const sp = isSelfRef ? POS_SELF[0] : POSITIONS[0]
@@ -432,7 +432,7 @@ function ResultView({ speaker, listener, reference, onReset }) {
       {/* SVG */}
       <div style={{ position: 'relative', width: '100%', maxWidth: 520,
         flexShrink: 1, flexGrow: 1, minHeight: 0 }}>
-        <svg viewBox={isSelfRef ? '0 0 640 420' : '0 0 600 460'} width="100%" height="100%"
+        <svg viewBox={isSelfRef ? '0 0 640 480' : '0 0 600 460'} width="100%" height="100%"
           style={{ overflow: 'visible' }} preserveAspectRatio="xMidYMid meet">
 
           {!isSelfRef && (
@@ -444,9 +444,9 @@ function ResultView({ speaker, listener, reference, onReset }) {
           {/* JE badge — left side when self-ref, above when normal */}
           {isSelfRef ? (
             <g>
-              <rect x={sp.x - 72} y={sp.y - 10} width={40} height={20} rx={10}
+              <rect x={sp.x - 82} y={sp.y - 10} width={40} height={20} rx={10}
                 fill={ROLE_COLORS.speaker.bg} stroke={ROLE_COLORS.speaker.color} strokeWidth={1.5} />
-              <text x={sp.x - 52} y={sp.y + 4} textAnchor="middle" fill={ROLE_COLORS.speaker.color}
+              <text x={sp.x - 62} y={sp.y + 4} textAnchor="middle" fill={ROLE_COLORS.speaker.color}
                 fontSize={12} fontWeight={800} fontFamily={F}>JE</text>
             </g>
           ) : (
