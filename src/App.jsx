@@ -3,10 +3,12 @@ import './App.css'
 
 const F = 'Inter, system-ui, sans-serif'
 
+const BASE = import.meta.env.BASE_URL
+
 const PEOPLE = [
-  { id: 'allefy',  name: 'Állefy',  avatar: '/Allefy.png',  color: '#818cf8', colorDark: '#4f46e5', pronoun3: 'IL' },
-  { id: 'hernane', name: 'Hernane', avatar: '/Hernane.png', color: '#22d3ee', colorDark: '#0891b2', pronoun3: 'IL' },
-  { id: 'sarah',   name: 'Sarah',   avatar: '/Sarah.png',   color: '#e879f9', colorDark: '#c026d3', pronoun3: 'ELLE' },
+  { id: 'allefy',  name: 'Állefy',  avatar: `${BASE}Allefy.png`,  color: '#818cf8', colorDark: '#4f46e5', pronoun3: 'IL' },
+  { id: 'hernane', name: 'Hernane', avatar: `${BASE}Hernane.png`, color: '#22d3ee', colorDark: '#0891b2', pronoun3: 'IL' },
+  { id: 'sarah',   name: 'Sarah',   avatar: `${BASE}Sarah.png`,   color: '#e879f9', colorDark: '#c026d3', pronoun3: 'ELLE' },
 ]
 
 const ROLE_COLORS = {
